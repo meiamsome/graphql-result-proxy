@@ -1,0 +1,45 @@
+{
+  "name": "graphql-result-proxy",
+  "version": "0.1.0",
+  "description": "Proxy implementation for GraphQL results to throw errors where the keys are used",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src/ -d lib/",
+    "lint": "standard src/**/*.js",
+    "prepare": "npm run build",
+    "test": "jest src/"
+  },
+  "author": "Oliver Wright <meiamsome@meiamso.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meiamsome/graphql-result-proxy.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-flow": "^7.8.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint-plugin-flowtype": "^4.6.0",
+    "flow-bin": "^0.115.0",
+    "graphql": "^14.5.8",
+    "jest": "^24.9.0",
+    "standard": "^14.3.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/*.js"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  },
+  "standard": {
+    "env": ["jest"],
+    "parser": "babel-eslint"
+  }
+}

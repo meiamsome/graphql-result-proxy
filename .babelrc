@@ -1,0 +1,25 @@
+{
+  "plugins": ["transform-flow-strip-types"],
+  "presets": [
+    "@babel/preset-flow",
+    [
+      "@babel/preset-env",
+      {
+        "modules": "commonjs"
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "plugins": ["transform-flow-strip-types"],
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": "commonjs"
+          }
+        ]
+      ]
+    }
+  }
+}
