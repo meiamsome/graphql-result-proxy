@@ -30,6 +30,19 @@ describe('getData', () => {
     expect(getData(layer)).toBe(data)
   })
 
+  it('works with all standard graphql types', () => {
+    const data = {
+      a: 'test',
+      b: [0, 1, 'a'],
+      c: true
+    }
+    const layer = createProxyLayer({
+      data,
+      path: ['a']
+    })
+    expect(getData(layer)).toBe(data)
+  })
+
   it('throws on object subkey error', () => {
     const data = {
       a: new SingleResultProxyError(new Error('Test error'))
@@ -83,6 +96,19 @@ describe('getData', () => {
 describe('getDataWithErrorsInline', () => {
   it('returns the raw layer data', () => {
     const data = {}
+    const layer = createProxyLayer({
+      data,
+      path: ['a']
+    })
+    expect(getDataWithErrorsInline(layer)).toBe(data)
+  })
+
+  it('works with all standard graphql types', () => {
+    const data = {
+      a: 'test',
+      b: [0, 1, 'a'],
+      c: true
+    }
     const layer = createProxyLayer({
       data,
       path: ['a']

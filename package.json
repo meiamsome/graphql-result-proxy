@@ -1,6 +1,6 @@
 {
   "name": "graphql-result-proxy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Proxy implementation for GraphQL results to throw errors where the keys are used",
   "main": "lib/index.js",
   "scripts": {

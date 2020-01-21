@@ -14,6 +14,9 @@ import {
 import { createProxyLayer } from './proxyLayer'
 
 const throwOnErrorsInTree = (node): any => {
+  if (typeof node === 'string') {
+    return node
+  }
   let error: ResultProxyError | null = node instanceof ResultProxyError ? node : null
   for (const key in node) {
     const result = throwOnErrorsInTree(node[key])
