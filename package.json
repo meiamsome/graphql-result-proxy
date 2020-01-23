@@ -1,6 +1,6 @@
 {
   "name": "graphql-result-proxy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Proxy implementation for GraphQL results to throw errors where the keys are used",
   "main": "lib/index.js",
   "scripts": {
@@ -39,7 +39,9 @@
     }
   },
   "standard": {
-    "env": ["jest"],
+    "env": [
+      "jest"
+    ],
     "parser": "babel-eslint"
   }
 }

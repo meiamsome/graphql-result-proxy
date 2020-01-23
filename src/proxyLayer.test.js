@@ -90,6 +90,19 @@ describe('createProxyLayer', () => {
       })
     })
 
+    it('doesn\'t fail for Symbol lookups', () => {
+      const key = Symbol('test')
+      const data = [{}, 1, 's']
+      const layer: any = createProxyLayer({
+        ...settings,
+        data,
+        path: ['a', 'b']
+      })
+      expect(layer[key]).toBeUndefined()
+      expect(layer[Symbol.iterator]).toBeInstanceOf(Function)
+      expect(layer[Symbol.isConcatSpreadable]).not.toBeDefined()
+    })
+
     it('allows then without throwing', () => {
       const layer = createProxyLayer({
         ...settings,

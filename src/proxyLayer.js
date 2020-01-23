@@ -23,7 +23,7 @@ export const createProxyLayer = (metadata: LayerMetadata): any => {
     if (metadata.throwOnInvalidKeys === false) {
       return undefined
     }
-    throw new Error(`Access of key that was not requested: ${metadata.path.join('.')}`)
+    throw new Error(`Access of key that was not requested: ${metadata.path.map(x => x.toString()).join('.')}`)
   }
   if (metadata.data instanceof Error) {
     throw metadata.data
@@ -41,6 +41,9 @@ export const createProxyLayer = (metadata: LayerMetadata): any => {
     get: (target, prop) => {
       if (prop === metadataKey) {
         return metadata
+      }
+      if (typeof prop === 'symbol') {
+        return target[prop]
       }
       if (isIgnoredKey(metadata, prop) && !Object.prototype.hasOwnProperty.call(target, prop)) {
         return undefined
