@@ -4,6 +4,10 @@ export class ResultProxyError extends Error {
   combine (other: ResultProxyError): ResultProxyError {
     throw new Error('Unimplemented')
   }
+
+  clone (): ResultProxyError {
+    throw new Error('Unimplemented')
+  }
 }
 
 export class SingleResultProxyError extends ResultProxyError {
@@ -26,6 +30,14 @@ export class SingleResultProxyError extends ResultProxyError {
       ])
     }
     throw new Error('Cannot combine error types')
+  }
+
+  clone () {
+    const result = new SingleResultProxyError(this.error)
+    if (result.stack && this.stack) {
+      result.stack = `${result.stack}\n\nOriginally caused by:\n${this.stack}`
+    }
+    return result
   }
 }
 
@@ -50,5 +62,13 @@ export class MultipleResultProxyError extends ResultProxyError {
       ])
     }
     throw new Error('Cannot combine error types')
+  }
+
+  clone () {
+    const result = new MultipleResultProxyError(this.errors)
+    if (result.stack && this.stack) {
+      result.stack = `${result.stack}\n\nOriginally caused by:\n${this.stack}`
+    }
+    return result
   }
 }

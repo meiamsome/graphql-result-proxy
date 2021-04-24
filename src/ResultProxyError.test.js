@@ -32,6 +32,16 @@ describe('SingleResultProxyError', () => {
       new Error('ccc')
     ]))
   })
+
+  it('clones correctly', () => {
+    const error = new SingleResultProxyError(new Error('aaa'))
+
+    const result = error.clone()
+    expect(result).toBeInstanceOf(SingleResultProxyError)
+    expect(result.error).toEqual(new Error('aaa'))
+
+    expect(result).not.toBe(error)
+  })
 })
 
 describe('MultipleResultProxyError', () => {
@@ -62,5 +72,15 @@ describe('MultipleResultProxyError', () => {
       new Error('ccc'),
       new Error('ddd')
     ]))
+  })
+
+  it('clones correctly', () => {
+    const error = new MultipleResultProxyError([new Error('aaa'), new Error('bbb')])
+
+    const result = error.clone()
+    expect(result).toBeInstanceOf(MultipleResultProxyError)
+    expect(result.errors).toEqual([new Error('aaa'), new Error('bbb')])
+
+    expect(result).not.toBe(error)
   })
 })

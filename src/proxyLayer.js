@@ -3,6 +3,7 @@
 import {
   metadataKey
 } from './metadataKey'
+import { ResultProxyError } from './ResultProxyError'
 
 import {
   type Settings
@@ -24,6 +25,9 @@ export const createProxyLayer = (metadata: LayerMetadata): any => {
       return undefined
     }
     throw new Error(`Access of key that was not requested: ${metadata.path.map(x => x.toString()).join('.')}`)
+  }
+  if (metadata.data instanceof ResultProxyError) {
+    throw metadata.data.clone()
   }
   if (metadata.data instanceof Error) {
     throw metadata.data

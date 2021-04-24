@@ -10,6 +10,7 @@ import {
 import {
   metadataKey
 } from './metadataKey'
+import { SingleResultProxyError } from './ResultProxyError'
 
 describe('createProxyLayer', () => {
   let settings: Settings = {}
@@ -34,6 +35,32 @@ describe('createProxyLayer', () => {
         data: error,
         path: ['a', 'b']
       })).toThrow(error)
+    })
+
+    it('throws ResultProxyError with the stacktrace of caller', () => {
+      const stackTraceLineNumberRegex = /proxyLayer\.test\.js:(\d+):/
+      const error = new SingleResultProxyError(new Error('test error'))
+      let resultError: Error | null = null
+      try {
+        createProxyLayer({
+          ...settings,
+          data: error,
+          path: ['a', 'b']
+        })
+      } catch (err) {
+        resultError = err
+      }
+      expect(resultError).toBeDefined()
+
+      if (resultError) {
+        const originalLineNumber = stackTraceLineNumberRegex.exec(error.stack)?.[1]
+        const [newTrace, originalTrace] = resultError.stack.split('Originally caused by')
+        const newTraceLineNumber = stackTraceLineNumberRegex.exec(newTrace)?.[1]
+        expect(newTraceLineNumber).toBe(`${+originalLineNumber + 3}`)
+
+        const originalTraceLineNumber = stackTraceLineNumberRegex.exec(originalTrace)?.[1]
+        expect(originalTraceLineNumber).toBe(originalLineNumber)
+      }
     })
 
     it('directly returns a null value', () => {
